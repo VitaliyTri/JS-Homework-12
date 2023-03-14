@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+        }
+
+        .content {
+            background-color: gainsboro;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+
+        svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .player {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .play {
+            cursor: pointer;
+        }
+
+        .pause {
+            cursor: pointer;
+        }
+
+        .play-pause {
+            height: 50px;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            height: 25px;
+            background-color: rgb(7, 8, 10);
+            padding: 0;
+            border: 2px solid black;
+            border-radius: 8px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            box-sizing: content-box;
+            background: #ffffff;
+            border: 1px solid rgb(12, 12, 12);
+            border-radius: 10px/100%;
+            cursor: pointer;
+            width: 12px;
+            height: 15px;
+            -webkit-appearance: none;
+            margin-top: -4px;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            border-radius: 5px/100%;
+            height: 10px;
+            border: 1px solid rgb(0, 0, 0);
+            background-color: #fff;
+        }
+
+        .volume {
+            width: 200px;
+        }
+
+        .current {
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        @media(max-width:1024px) {
+            .container {
+                width: 1024px;
+            }
+        }
+
+        @media(max-width:768px) {
+            .container {
+                width: 768px;
+            }
+        }
+
+        @media(max-width:425px) {
+            .container {
+                width: 425px;
+            }
+        }
+
+        @media(max-width:375px) {
+            .container {
+                width: 375px;
+            }
+        }
+
+        @media(max-width:320px) {
+            .container {
+                width: 320px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="current">
+                Текущее время: <span class="currentTime">0</span>
+            </div>
+    
+            <div class="player">
+                <video class="video" src="https://promodj.com/preview_h264/7431618/7431618.mp4?"></video>
+                <input type="range" class="timing" value="0" step="0.001">
+            </div>
+    
+            <div class="controls">
+                <div class="play-pause">
+                    <i class="play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                            <path
+                                d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
+                        </svg></i>
+                    <i class="pause"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                            <path
+                                d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z" />
+                        </svg></i>
+                </div>
+                <input type="range" class="volume" min="0" max="1" step="0.01">
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        const videoEl = document.querySelector('.video');
+        const playBtn = document.querySelector('.play')
+        const pauseBtn = document.querySelector('.pause')
+        const timingEl = document.querySelector('.timing');
+        const volumeEl = document.querySelector('.volume');
+        const currentTimeEl = document.querySelector('.currentTime');
+
+        playBtn.addEventListener('click', function (e) {
+            videoEl.play();
+        });
+        pauseBtn.addEventListener('click', function (e) {
+            videoEl.pause();
+        });
+        timingEl.addEventListener('input', function (e) {
+            videoEl.currentTime = timingEl.value / 100 * videoEl.duration;
+        });
+        volumeEl.addEventListener('input', function (e) {
+            videoEl.volume = volumeEl.value;
+        });
+        setInterval(function (e) {
+            currentTimeEl.textContent = Math.round(videoEl.currentTime) + " сек";
+        });
+
+
+    </script>
+</body>
+
+</html>
